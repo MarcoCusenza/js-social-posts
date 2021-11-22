@@ -85,13 +85,13 @@ function generatePost(post) {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button  js-like-button">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
-                    <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">80</b> persone
+                    <div class="likes__counter" id="likes-counter-${post.id}">
+                        Piace a <b id="like-counter-${post.id}" class="js-likes-counter">80</b> persone
                     </div>
                 </div>
             </div>
@@ -102,7 +102,6 @@ function generatePost(post) {
 function timeFrom(date) {
     const today = new Date();
     const targetDate = new Date(date);
-    console.log(today, targetDate);
     const minutes = Math.round(Math.abs(today - targetDate) / (1000 * 60));
     if ((minutes / (60 * 24)) > 365) { //se sono anni
         return `${Math.round(Math.abs(minutes / (60 * 24 * 365)))} anni fa`
@@ -119,6 +118,21 @@ function timeFrom(date) {
 function fillPage(posts) {
     for (let i = 0; i < posts.length; i++) {
         generatePost(posts[i]);
+    }
+    //like clickabili
+    const likeButtons = document.getElementsByClassName(`like-button`);
+    const likeCounters = document.getElementsByClassName(`js-likes-counter`);
+    for (let i = 0; i < likeButtons.length; i++) {
+        let likes = document.getElementById(`likes-counter-${i + 1}`).innerHTML;
+        likeButtons[i].addEventListener("click", function () {
+            if (likeButtons[i].classList.contains("like-button--liked") == false) {
+                likeButtons[i].classList.add("like-button--liked");
+                likeCounters[i].innerHTML = parseInt(likeCounters[i].innerHTML) + 1;
+            } else {
+                likeButtons[i].classList.remove("like-button--liked");
+                likeCounters[i].innerHTML = parseInt(likeCounters[i].innerHTML) - 1;
+            }
+        });
     }
 }
 
