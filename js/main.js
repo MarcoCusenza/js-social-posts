@@ -123,7 +123,6 @@ function fillPage(posts) {
     const likeButtons = document.getElementsByClassName(`like-button`);
     const likeCounters = document.getElementsByClassName(`js-likes-counter`);
     for (let i = 0; i < likeButtons.length; i++) {
-        let likes = document.getElementById(`likes-counter-${i + 1}`).innerHTML;
         likeButtons[i].addEventListener("click", function () {
             if (likeButtons[i].classList.contains("like-button--liked") == false) {
                 likeButtons[i].classList.add("like-button--liked");
