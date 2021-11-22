@@ -57,7 +57,6 @@ const posts = [
 ];
 
 // PROGRAMMA
-const container = document.getElementById("container");
 fillPage(posts);
 // END PROGRAMMA
 
@@ -65,7 +64,7 @@ fillPage(posts);
 // FUNZIONI
 function generatePost(post) {
     const date = post.created;
-    container.innerHTML += `
+    document.getElementById("container").innerHTML += `
         <div class="post">
             <div class="post__header">
                 <div class="post-meta">
@@ -74,7 +73,7 @@ function generatePost(post) {
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${post.author.name}</div>
-                        <div class="post-meta__time">${timeFrom(date)}</div>
+                        <div class="post-meta__time">${timeFrom(date)}, il giorno ${createDate(date).getDay()}/${createDate(date).getMonth()}/${createDate(date).getFullYear()}</div>
                     </div>
                 </div>
             </div>
@@ -99,27 +98,11 @@ function generatePost(post) {
     `;
 }
 
-function timeFrom(date) {
-    const today = new Date();
-    const targetDate = new Date(date);
-    const minutes = Math.round(Math.abs(today - targetDate) / (1000 * 60));
-    if ((minutes / (60 * 24)) > 365) { //se sono anni
-        return `${Math.round(Math.abs(minutes / (60 * 24 * 365)))} anni fa`
-    } else if (minutes / (60 * 24) > 30) { //se sono mesi
-        return `${Math.round(Math.abs(minutes / (60 * 24 * 30)))} mesi fa`
-    } else if ((minutes / 60) > 24) { //se sono giorni
-        return `${Math.round(Math.abs(minutes / (60 * 24)))} giorni fa`
-    } else if (minutes > 60) { //se sono ore
-        return `${Math.round(Math.abs(minutes / 60))} ore fa`
-    }
-    return `${minutes} minuti fa`
-}
-
 function fillPage(posts) {
     for (let i = 0; i < posts.length; i++) {
         generatePost(posts[i]);
     }
-    //like clickabili
+    //like cliccabili
     const likeButtons = document.getElementsByClassName(`like-button`);
     const likeCounters = document.getElementsByClassName(`js-likes-counter`);
     for (let i = 0; i < likeButtons.length; i++) {
@@ -135,8 +118,28 @@ function fillPage(posts) {
     }
 }
 
+function timeFrom(date) {
+    const today = new Date();
+    const targetDate = createDate(date);
+    const minutes = Math.ceil(Math.abs(today - targetDate) / (1000 * 60));
+    if ((minutes / (60 * 24)) > 365) { //se sono anni
+        return `${Math.ceil(Math.abs(minutes / (60 * 24 * 365)))} anni fa`
+    } else if (minutes / (60 * 24) > 30) { //se sono mesi
+        return `${Math.ceil(Math.abs(minutes / (60 * 24 * 30)))} mesi fa`
+    } else if ((minutes / 60) > 24) { //se sono giorni
+        return `${Math.ceil(Math.abs(minutes / (60 * 24)))} giorni fa`
+    } else if (minutes > 60) { //se sono ore
+        return `${Math.ceil(Math.abs(minutes / 60))} ore fa`
+    }
+    return `${minutes} minuti fa`
+}
+
 function getInitials(name) {
     return name.replace(/[a-z]/g, '');
 }
 
+function createDate(date) {
+    const targetDate = new Date(date);
+    return targetDate
+}
 // END FUNZIONI
