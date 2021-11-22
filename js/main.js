@@ -101,7 +101,19 @@ function generatePost(post) {
 
 function timeFrom(date) {
     const today = new Date();
-    Math.ceil(Math.abs(today - date) / (1000 * 60 * 60 * 24));
+    const targetDate = new Date(date);
+    console.log(today, targetDate);
+    const minutes = Math.round(Math.abs(today - targetDate) / (1000 * 60));
+    if ((minutes / (60 * 24)) > 365) { //se sono anni
+        return `${Math.round(Math.abs(minutes / (60 * 24 * 365)))} anni fa`
+    } else if (minutes / (60 * 24) > 30) { //se sono mesi
+        return `${Math.round(Math.abs(minutes / (60 * 24 * 30)))} mesi fa`
+    } else if ((minutes / 60) > 24) { //se sono giorni
+        return `${Math.round(Math.abs(minutes / (60 * 24)))} giorni fa`
+    } else if (minutes > 60) { //se sono ore
+        return `${Math.round(Math.abs(minutes / 60))} ore fa`
+    }
+    return `${minutes} minuti fa`
 }
 
 function fillPage(posts) {
