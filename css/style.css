@@ -64,7 +64,16 @@ h1 {
 
 .profile-pic {
     border-radius: 50%;
+    width: 60px;
     max-width: 60px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(133, 133, 133);
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 60px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .profile-pic-default {
