@@ -63,23 +63,26 @@ fillPage(posts);
 
 // FUNZIONI
 function generatePost(post) {
-    const date = post.created;
+
+    const { id, content, media, author, likes, created } = post;
+
+    const date = created;
     document.getElementById("container").innerHTML += `
         <div class="post">
             <div class="post__header">
                 <div class="post-meta">
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src="${post.author.image}" alt="${getInitials(post.author.name)}">
+                        <img class="profile-pic" src="${author.image}" alt="${getInitials(author.name)}">
                     </div>
                     <div class="post-meta__data">
-                        <div class="post-meta__author">${post.author.name}</div>
+                        <div class="post-meta__author">${author.name}</div>
                         <div class="post-meta__time">${timeFrom(date)}, il giorno ${createDate(date).getDay()}/${createDate(date).getMonth()}/${createDate(date).getFullYear()}</div>
                     </div>
                 </div>
             </div>
-            <div class="post__text">${post.content}</div>
+            <div class="post__text">${content}</div>
             <div class="post__image">
-                <img src="${post.media}" alt="${post.id}">
+                <img src="${media}" alt="${id}">
             </div>
             <div class="post__footer">
                 <div class="likes js-likes">
@@ -89,8 +92,8 @@ function generatePost(post) {
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
-                    <div class="likes__counter" id="likes-counter-${post.id}">
-                        Piace a <b id="like-counter-${post.id}" class="js-likes-counter">80</b> persone
+                    <div class="likes__counter" id="likes-counter-${id}">
+                        Piace a <b id="like-counter-${id}" class="js-likes-counter">${likes}</b> persone
                     </div>
                 </div>
             </div>
